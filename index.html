@@ -49,35 +49,29 @@
 					General features of a remote file storage
 				-->
 				<section data-markdown>
-					### Why remote file storage?
+					### Remote file storage
 					- More flexible infrastructure
 					- Less cost for mid and small business
 					- Less know how required
-				</section>
-				<section data-markdown>
-					### Why not?
+					- ...But...
+
 					> They are fault-prone black boxes operated by a party other than the data owner
 				</section>
-				<section data-markdown>
-					_What do we want from a Cloud Storage System?_
-				</section>
-				<section data-markdown>
-					### General requirements
-					- Availability
-					- Freshness
-				</section>
-				<section data-markdown>
-					### Security requirements
-					- Confidentiality
-					- Integrity
-					- Autenticity
-					- Non-repudiation
-				</section>
-				<section data-markdown>
-					### Distributed System?
-
-					_Bonus_:
-					- Consistency
+				<section>
+					<h3>Requirements</h3>
+					<div style="display: inline-block">
+						<div style="float:left; width: 50%" data-markdown>
+							- Availability
+							- Freshness
+							- Consistency
+						</div>
+						<div style="float:left; width: 50%" data-markdown>
+							- Confidentiality
+							- Integrity
+							- Authentication
+							- Non-repudiation
+						</div>
+					</div>		
 				</section>
 			</section>
 			<section>
@@ -87,17 +81,9 @@
 				<section data-markdown>
 					### SiRiUS
 					Securing Remote Untrusted Storage
-				</section>
-				<section data-markdown>
 					> "Easy for end-users to install and use."
 
-					> "Can be layered on top of any network file system."
-				</section>
-				<section data-markdown>
-					### General requirements
-					- ~~Availability~~
-
-					_Delegated to lower layers_
+					> "Can be **layered** on top of any network file system."
 				</section>
 				<section data-markdown="">
 					![SiRiUS metadata structure](./img/sirius_meta_structure.png)
@@ -112,28 +98,29 @@
 					</textarea>
 				</section>
 				<section data-markdown>
-					### Freshness
-					- Guaranteed for metadata
+					### Other requirements
+					- Freshness
+						- Guaranteed for metadata
+					- ~~Availability~~
+						- _Delegated to lower layers_
 				</section>
 				<section data-markdown>
 					### Problems
 					- Availability (DoS)
 					- Seizing
 					- Rollback
+					- **Performance**
 				</section>
 				<section data-markdown>
-					## Performance
-				</section>
-				<section data-markdown>
-					### Slowdown factor
-					| | Small files | Big files|
-					|---|---|---|
-					|Read|20x|2.3x|
-					|Write|20x|6.3x|
-				</section>
-				<section data-markdown>
-					> 63% of the time spent during a 1 MB file
-					read is on AES decrypt. Signature generation take up about 40% of the time on a 1 MB file write.
+					<textarea data-template>
+						| | Small files | Big files|
+						|---|---|---|
+						|Read|20x|2.3x|
+						|Write|20x|6.3x|
+						
+						> 63% of the read time on AES decrypt. </br>
+						> 40% of the write time on signature generation.
+					</textarea>
 				</section>
 			</section>
 			<section>
