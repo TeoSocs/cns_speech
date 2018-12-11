@@ -93,6 +93,59 @@
 
 					> "Can be layered on top of any network file system."
 				</section>
+				<section data-markdown>
+					### General requirements
+					- ~~Availability~~
+
+					_Delegated to lower layers_
+				</section>
+				<section data-markdown="">
+					![SiRiUS metadata structure](./img/sirius_meta_structure.png)
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### Security requirements
+						- <img src="./img/my_icon_collection/svg/001-tick.svg" height="30px" style="vertical-align: middle"> Confidentiality 
+						- <img src="./img/my_icon_collection/svg/001-tick.svg" height="30px" style="vertical-align: middle"> Integrity
+						- <img src="./img/my_icon_collection/svg/001-tick.svg" height="30px" style="vertical-align: middle"> Autenticity
+						- <img src="./img/my_icon_collection/svg/001-tick.svg" height="30px" style="vertical-align: middle"> Non-repudiation
+					</textarea>
+				</section>
+				<section data-markdown>
+					### Freshness
+					- Guaranteed for metadata
+				</section>
+				<section data-markdown>
+					### Problems
+					- Availability (DoS)
+					- Seizing
+					- Rollback
+				</section>
+				<section data-markdown>
+					## Performance
+				</section>
+				<section data-markdown>
+					### Slowdown factor
+					| | Small files | Big files|
+					|---|---|---|
+					|Read|20x|2.3x|
+					|Write|20x|6.3x|
+				</section>
+				<section data-markdown>
+					> 63% of the time spent during a 1 MB file
+					read is on AES decrypt. Signature generation take up about 40% of the time on a 1 MB file write.
+				</section>
+			</section>
+			<section>
+				<!-- 
+					Second Example: CRUST
+				-->
+				<section data-markdown>
+					### CRUST
+					Cryptographic Remote Untrusted Storage
+					
+					without Public Keys
+				</section>
 			</section>
 		</div>
 	</div>
