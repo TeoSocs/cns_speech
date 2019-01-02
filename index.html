@@ -71,7 +71,7 @@
 							- Authentication
 							- Non-repudiation
 						</div>
-					</div>		
+					</div>
 				</section>
 			</section>
 			<section>
@@ -100,7 +100,7 @@
 				<section data-markdown>
 					### Other requirements
 					- Freshness
-						- Guaranteed for metadata
+					- Guaranteed for metadata
 					- ~~Availability~~
 						- _Delegated to lower layers_
 				</section>
@@ -130,10 +130,57 @@
 				<section data-markdown>
 					### CRUST
 					Cryptographic Remote Untrusted Storage
-					
+
 					without Public Keys
 				</section>
+				<section data-markdown>
+					### Design
+					- Needs a Trusted Agent
+						- Shares a secret key with each user
+						- Public database of _"key seeds"_
+					- Meta-data structure of SiRiUS
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### Better performance
+						| | CRUST | SiRiUS |
+						|---|---|---|
+						|Read|1.03x|2.3x|
+						|Write|1.28x|6.3x|
+
+						> Still no availability guaranteed
+					</textarea>
+				</section>
 			</section>
+			<section>
+					<!-- 
+						Final Example: Depot
+					-->
+					<section data-markdown>
+						### Depot
+						Cloud storage with minimal trust
+					</section>
+					<section data-markdown>
+						### Properties
+						- Eliminates trust for safety
+						- Minimizes trust for liveness and availability
+					</section>
+					<section data-markdown>
+						### Key Ideas
+						- Reduce misbehavior to concurrency
+						- Enforce Fork-Join-Causal consistency
+							- _Dependency preservation_
+
+						> Other storage properties left to be layered over FJC
+					</section>
+					<section data-markdown>
+						### Basic protocol
+						Standard log exchange protocol
+						- Logical clock
+						- Dependency Version Vector
+						- Signed updates
+					</section>
+				</section>
 		</div>
 	</div>
 
