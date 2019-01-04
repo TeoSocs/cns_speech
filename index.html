@@ -30,13 +30,15 @@
 				<!--
 					Some presentations
 				-->
-				<section data-markdown>
+				<section data-markdown
+				data-notes="Hello everybody, I'm Matteo Sovilla and today I will talk you about untrusted storage: cloud storage systems with no trust requirement regarding the Service provider">
 					## Untrusted storage
 					Matteo Sovilla
 
 					18/12/2018
 				</section>
-				<section data-markdown>
+				<section data-markdown
+				data-notes="After a short introduction where I will give an overview about purposes and challenges of this kind of systems, I will show you 3 different approaches to the problem. The first two approaches come from the secondary paper assigned to me, while the last is from the main text.">
 					### Goal of the presentation
 					Overview on untrusted storage systems
 					- Purposes
@@ -48,7 +50,10 @@
 				<!-- 
 					General features of a remote file storage
 				-->
-				<section data-markdown>
+				<section data-markdown
+				data-notes="First of all, why would someone want to use a cloud storage system?
+				Buying some space on some cloud means that you have no longer to worry about maintain physically some machines, some servers to store your data. In a full-cloud scenario, you don't have to worry about buying new servers, provide a continous supply of electricity, repair faults, make reundant backup copies of your data (just joking, you should still backup it. Maybe a little less, but ONLY A LITTLE).
+				This obviously come to a price: Cloud storage are black-boxes for you, you don't know what's going on under the hood because you have to trust your cloud service provider.">
 					### Remote file storage
 					- More flexible infrastructure
 					- Less cost for mid and small business
@@ -57,7 +62,15 @@
 
 					> They are fault-prone black boxes operated by a party other than the data owner
 				</section>
-				<section>
+				<section
+				data-notes="There are a few fundamental requirements on which I would like you to focus in this presentation. Left ones are lower-level requirements, think them as the 'TCP/IP' of the storage systems. 
+				Data should be available, that means I should be able to read and write and use the system whenever I want.
+				Data should be fresh: not outdated or stale data.
+				Data should be consistent across the entire distributed system. There should be only one 'real' version of the data, even if replicated in several nodes of the cloud is unacceptable to have different conflicting files in each machine.
+				On the right instead we have higher level requirements, application level we could name them.
+				Data confidentiality regards who can read my data: if you are not authorized then you should not be able to read them.
+				No one shoud be able to tamper my data, so integrity is the second requirement.
+				In order to be sure that the user that wants to read or modify a file is who it claims to be, we need some authentication system, while non-repudiation is another desirable property which assure that if someone perform some action on a file he could not deny to have done it in the future.">
 					<h3>Requirements</h3>
 					<div style="display: inline-block">
 						<div style="float:left; width: 50%" data-markdown>
