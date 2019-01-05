@@ -70,7 +70,7 @@ Data should be consistent across the entire distributed system. There should be 
 On the right instead we have higher level requirements, application level we could name them.
 Data confidentiality regards who can read my data: if you are not authorized then you should not be able to read them.
 No one shoud be able to tamper my data, so integrity is the second requirement.
-In order to be sure that the user that wants to read or modify a file is who it claims to be, we need some authentication system, while non-repudiation is another desirable property which assure that if someone perform some action on a file he could not deny to have done it in the future.">
+In order to be sure that the user that wants to read or modify a file is who it claims to be, we need some authentication system.">
 					<h3>Requirements</h3>
 					<div style="display: inline-block">
 						<div style="float:left; width: 50%" data-markdown>
@@ -81,8 +81,7 @@ In order to be sure that the user that wants to read or modify a file is who it 
 						<div style="float:left; width: 50%" data-markdown>
 							- Confidentiality
 							- Integrity
-							- Authentication
-							- Non-repudiation
+							- Authenticity
 						</div>
 					</div>
 				</section>
@@ -91,40 +90,51 @@ In order to be sure that the user that wants to read or modify a file is who it 
 				<!-- 
 					First Example: SiRiUS
 				-->
-				<section data-markdown>
+				<section data-markdown
+data-notes="As first example, I'll introduce SiRiUS. The aim of this project is to deliver a system easy for users to install and use. It should be installed over an existent system of cloud storage, in order to provide security and privacy features. As a consequence, referring to the past slide, it is focused on higher-level requirements.">
 					### SiRiUS
 					Securing Remote Untrusted Storage
 					> "Easy for end-users to install and use."
 
 					> "Can be **layered** on top of any network file system."
 				</section>
-				<section data-markdown="">
+				<section data-markdown
+data-notes="SiRiUS relies on metadata, hidden from the user, to achieve his goal. Also, it heavily uses public and private keys for encription and authentication.
+Each file is encrypted with a symmetric key (we call it 'file key'). This key is then encrypted using the public key of each user, and added to the metadata file. In that way, when an authorized user wants to read the file, it can retrieve the file key from the metadata and use it.
+File signature public key is used to check the integrity of the file, last modified timestamp is checked is used to enforce freshness check over the file system, and filename is used to link each file with his metadata file.
+Metadata file is then signed using the owner's signature: that means only the file owner can modify it.">
 					![SiRiUS metadata structure](./img/sirius_meta_structure.png)
 				</section>
-				<section data-markdown>
+				<section data-markdown
+data-notes="This data structure successfully ensure the three security requirements desired, usign the properties of asymmetric keys. Only the authorized users can decrypt the file and read it (or modify it), file signature prevents undetected tampering of the file content, and I am sure that a user is who it claims to be because he is in possession of his specific private key.">
 					<textarea data-template>
 						### Security requirements
 						- <img src="./img/my_icon_collection/svg/001-tick.svg" height="30px" style="vertical-align: middle"> Confidentiality 
 						- <img src="./img/my_icon_collection/svg/001-tick.svg" height="30px" style="vertical-align: middle"> Integrity
 						- <img src="./img/my_icon_collection/svg/001-tick.svg" height="30px" style="vertical-align: middle"> Autenticity
-						- <img src="./img/my_icon_collection/svg/001-tick.svg" height="30px" style="vertical-align: middle"> Non-repudiation
 					</textarea>
 				</section>
-				<section data-markdown>
+				<section data-markdown
+data-notes="Takling the higher level, this system falls a bit short on lower level requirements: freshness is only guaranteed for the metadata, there is no timestamp on the file content. Availability too is not addressed in any way, just delegated to the system that host SiRiUS.">
 					### Other requirements
 					- Freshness
-					- Guaranteed for metadata
+						- Guaranteed for metadata
 					- ~~Availability~~
 						- _Delegated to lower layers_
 				</section>
-				<section data-markdown>
+				<section data-markdown
+data-notes="This directly exposes some issues: Denial-Of-Service attacks is possible, targeting the underlying system.
+A seizing attack is also possible: it is an attack where a malicious user change the entire content of the file system (metadata included) to add his key everywhere. It is quite impossible to perform this kind of attack undetected, but still..!
+We have rollback issues: a malicious user could simply continously replace a file with an older version of it. There are some workaround to prevent this, but the 'vanilla protocol' is vulnerable.
+The final, enormous issue is the performance issue.">
 					### Problems
 					- Availability (DoS)
 					- Seizing
 					- Rollback
 					- **Performance**
 				</section>
-				<section data-markdown>
+				<section data-markdown
+data-notes="These are the slowdown factors on read and write using SiRiUS. They are huge, and this mainly depends on Asymmetric key system. 63% of the read time is spent on AES decrypt, 40% of the write time on signature generation, these are very significative numbers!">
 					<textarea data-template>
 						| | Small files | Big files|
 						|---|---|---|
@@ -140,7 +150,8 @@ In order to be sure that the user that wants to read or modify a file is who it 
 				<!-- 
 					Second Example: CRUST
 				-->
-				<section data-markdown>
+				<section data-markdown
+				data-notes="This take us to our second example: CRUST.">
 					### CRUST
 					Cryptographic Remote Untrusted Storage
 
