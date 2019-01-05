@@ -151,20 +151,27 @@ data-notes="These are the slowdown factors on read and write using SiRiUS. They 
 					Second Example: CRUST
 				-->
 				<section data-markdown
-				data-notes="This take us to our second example: CRUST.">
+data-notes="This take us to our second example: CRUST. Learning from SiRiUS, it substantially presents the same structure, adapted in order to work without asymmetric keys.">
 					### CRUST
 					Cryptographic Remote Untrusted Storage
 
 					without Public Keys
 				</section>
-				<section data-markdown>
+				<section data-markdown
+data-notes="This obviously require some workarounds:
+Using symmetric keys I have to use a specific key for every file, for every user. Then, these key should be distributed and shared.
+In CRUST, a Trusted Agent is needed during initialization. The agent shares a secret key with each user (master key), and maintains a public database of 'seeds' that can be used together with the master user key to derive the file-specific user key.
+The metadata file structure is substantially the same of SiRiUS, so I won't dive deeper into that.">
 					### Design
 					- Needs a Trusted Agent
 						- Shares a secret key with each user
 						- Public database of _"key seeds"_
 					- Meta-data structure of SiRiUS
 				</section>
-				<section data-markdown>
+				<section data-markdown
+data-notes="Using symmetric encryption dramatically improve performance: here we can compare CRUST and SiRiUS read and write speed.
+The cost however is significative: a trusted agent is NOT a minor introduction in this kind of system, and a key distribution is a critical, dangerous process.
+In addiction, even CRUST, like SiRiUS, target 'application level' requirements, and so it cannot solve lower level flaws.">
 					<textarea data-template>
 						### Better performance
 						| | CRUST | SiRiUS |
@@ -180,7 +187,8 @@ data-notes="These are the slowdown factors on read and write using SiRiUS. They 
 					<!-- 
 						Final Example: Depot
 					-->
-					<section data-markdown>
+					<section data-markdown
+					>
 						### Depot
 						Cloud storage with minimal trust
 					</section>
