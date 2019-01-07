@@ -788,7 +788,9 @@
 					var numberElement = document.createElement( 'div' );
 					numberElement.classList.add( 'slide-number' );
 					numberElement.classList.add( 'slide-number-pdf' );
-					numberElement.innerHTML = formatSlideNumber( slideNumberH, '.', slideNumberV );
+					//numberElement.innerHTML = formatSlideNumber( slideNumberH, '.', slideNumberV );
+					var current = slide.getAttribute('number');
+					numberElement.innerHTML = formatSlideNumber( current , '/', getTotalSlides() );
 					page.appendChild( numberElement );
 				}
 

@@ -8,7 +8,7 @@
 	<title>CNS 2018 Sovilla</title>
 
 	<link rel="stylesheet" href="css/reveal.css">
-	<link rel="stylesheet" href="css/theme/black.css">
+	<link rel="stylesheet" href="css/theme/white.css">
 
 	<!-- Theme used for syntax highlighting of code -->
 	<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -31,13 +31,15 @@
 					Some presentations
 				-->
 				<section data-markdown
-data-notes="Hello everybody, I'm Matteo Sovilla and today I will talk you about untrusted storage: cloud storage systems with no trust requirement regarding the Service provider">
+data-notes="Hello everybody, I'm Matteo Sovilla and today I will talk you about untrusted storage: cloud storage systems with no trust requirement regarding the Service provider"
+number = 1>
 					## Untrusted storage
 					Matteo Sovilla
 
 					18/12/2018
 				</section>
 				<section data-markdown
+				number = 2
 data-notes="After a short introduction where I will give an overview about purposes and challenges of this kind of systems, I will show you 3 different approaches to the problem. The first two approaches come from the secondary paper assigned to me, while the last is from the main text.">
 					### Goal of the presentation
 					Overview on untrusted storage systems
@@ -51,6 +53,7 @@ data-notes="After a short introduction where I will give an overview about purpo
 					General features of a remote file storage
 				-->
 				<section data-markdown
+				number = 3
 data-notes="First of all, why would someone want to use a cloud storage system?
 Buying some space on some cloud means that you have no longer to worry about maintain physically some machines, some servers to store your data. In a full-cloud scenario, you don't have to worry about buying new servers, provide a continous supply of electricity, repair faults, make reundant backup copies of your data (just joking, you should still backup it. Maybe a little less, but ONLY A LITTLE).
 This obviously come to a price: Cloud storage are black-boxes for you, you don't know what's going on under the hood because you have to trust your cloud service provider.">
@@ -63,6 +66,7 @@ This obviously come to a price: Cloud storage are black-boxes for you, you don't
 					> They are fault-prone black boxes operated by a party other than the data owner
 				</section>
 				<section
+				number = 4
 data-notes="There are a few fundamental requirements on which I would like you to focus in this presentation. Left ones are lower-level requirements, think them as the 'TCP/IP' of the storage systems. 
 Data should be available, that means I should be able to read and write and use the system whenever I want.
 Data should be fresh: not outdated or stale data.
@@ -91,6 +95,7 @@ In order to be sure that the user that wants to read or modify a file is who it 
 					First Example: SiRiUS
 				-->
 				<section data-markdown
+				number = 5
 data-notes="As first example, I'll introduce SiRiUS. The aim of this project is to deliver a system easy for users to install and use. It should be installed over an existent system of cloud storage, in order to provide security and privacy features. As a consequence, referring to the past slide, it is focused on higher-level requirements.">
 					### SiRiUS
 					Securing Remote Untrusted Storage
@@ -99,6 +104,7 @@ data-notes="As first example, I'll introduce SiRiUS. The aim of this project is 
 					> "Can be **layered** on top of any network file system."
 				</section>
 				<section data-markdown
+				number = 6
 data-notes="SiRiUS relies on metadata, hidden from the user, to achieve his goal. Also, it heavily uses public and private keys for encription and authentication.
 Each file is encrypted with a symmetric key (we call it 'file key'). This key is then encrypted using the public key of each user, and added to the metadata file. In that way, when an authorized user wants to read the file, it can retrieve the file key from the metadata and use it.
 File signature public key is used to check the integrity of the file, last modified timestamp is checked is used to enforce freshness check over the file system, and filename is used to link each file with his metadata file.
@@ -106,6 +112,7 @@ Metadata file is then signed using the owner's signature: that means only the fi
 					![SiRiUS metadata structure](./img/sirius_meta_structure.png)
 				</section>
 				<section data-markdown
+				number = 7
 data-notes="This data structure successfully ensure the three security requirements desired, usign the properties of asymmetric keys. Only the authorized users can decrypt the file and read it (or modify it), file signature prevents undetected tampering of the file content, and I am sure that a user is who it claims to be because he is in possession of his specific private key.">
 					<textarea data-template>
 						### Security requirements
@@ -115,6 +122,7 @@ data-notes="This data structure successfully ensure the three security requireme
 					</textarea>
 				</section>
 				<section data-markdown
+				number = 8
 data-notes="Takling the higher level, this system falls a bit short on lower level requirements: freshness is only guaranteed for the metadata, there is no timestamp on the file content. Availability too is not addressed in any way, just delegated to the system that host SiRiUS.">
 					### Other requirements
 					- Freshness
@@ -123,6 +131,7 @@ data-notes="Takling the higher level, this system falls a bit short on lower lev
 						- _Delegated to lower layers_
 				</section>
 				<section data-markdown
+				number = 9
 data-notes="This directly exposes some issues: Denial-Of-Service attacks is possible, targeting the underlying system.
 A seizing attack is also possible: it is an attack where a malicious user change the entire content of the file system (metadata included) to add his key everywhere. It is quite impossible to perform this kind of attack undetected, but still..!
 We have rollback issues: a malicious user could simply continously replace a file with an older version of it. There are some workaround to prevent this, but the 'vanilla protocol' is vulnerable.
@@ -134,6 +143,7 @@ The final, enormous issue is the performance issue.">
 					- **Performance**
 				</section>
 				<section data-markdown
+				number = 10
 data-notes="These are the slowdown factors on read and write using SiRiUS. They are huge, and this mainly depends on Asymmetric key system. 63% of the read time is spent on AES decrypt, 40% of the write time on signature generation, these are very significative numbers!">
 					<textarea data-template>
 						| | Small files | Big files|
@@ -151,6 +161,7 @@ data-notes="These are the slowdown factors on read and write using SiRiUS. They 
 					Second Example: CRUST
 				-->
 				<section data-markdown
+				number = 11
 data-notes="This take us to our second example: CRUST. Learning from SiRiUS, it substantially presents the same structure, adapted in order to work without asymmetric keys.">
 					### CRUST
 					Cryptographic Remote Untrusted Storage
@@ -158,6 +169,7 @@ data-notes="This take us to our second example: CRUST. Learning from SiRiUS, it 
 					without Public Keys
 				</section>
 				<section data-markdown
+				number = 12
 data-notes="This obviously require some workarounds:
 Using symmetric keys I have to use a specific key for every file, for every user. Then, these key should be distributed and shared.
 In CRUST, a Trusted Agent is needed during initialization. The agent shares a secret key with each user (master key), and maintains a public database of 'seeds' that can be used together with the master user key to derive the file-specific user key.
@@ -169,6 +181,7 @@ The metadata file structure is substantially the same of SiRiUS, so I won't dive
 					- Meta-data structure of SiRiUS
 				</section>
 				<section data-markdown
+				number = 13
 data-notes="Using symmetric encryption dramatically improve performance: here we can compare CRUST and SiRiUS read and write speed.
 The cost however is significative: a trusted agent is NOT a minor introduction in this kind of system, and a key distribution is a critical, dangerous process.
 In addiction, even CRUST, like SiRiUS, target 'application level' requirements, and so it cannot solve lower level flaws.">
@@ -188,18 +201,21 @@ In addiction, even CRUST, like SiRiUS, target 'application level' requirements, 
 						Final Example: Depot
 					-->
 					<section data-markdown
+					number = 14
 data-notes="An entirely different approach is the one behind Depot, the third example and object of the main paper that we all have already read.
 Depot says 'ok, first of all the state of the art around is a mess. We should give a sort of formalization of the requirement needed by a secure cloud infrastructure'. They did it and realize that there is a 'main' requirement that needs to be achieved, and in order to grasp it they should 'go deeper' (have you seen inception?).">
 						### Depot
 						Cloud storage with minimal trust
 					</section>
 					<section data-markdown
+					number = 15
 data-notes="So, Depot focus on the lower level requirements. It eliminates trust for safety and minimizes trust for liveness and availability.">
 						### Properties
 						- Eliminates trust for safety
 						- Minimizes trust for liveness and availability
 					</section>
 					<section data-markdown
+					number = 16
 data-notes="It relies on three simple key ideas:
 First, the system should be a full-distributed system. There shouldn't be any single point of failure, even clients should be able to provide reads to other clients if ther have fresh data about it.
 Second, it tracks the entire history of a file. Imagine that it works as a big git repository. Every step is recorded, and misbehavior is just concurrency. Someone else is modifying my 'path' and I'm not aware of it.
@@ -214,6 +230,7 @@ This provides a solid base, and the higher level properties can be layered over 
 						> Other storage properties left to be layered over FJC
 					</section>
 					<section data-markdown
+					number = 17
 data-notes="Identified the main ideas, the basic protocol is the logical consequence, it's a standard log exchange protocol that relies on 3 main elements to work:
 The logical clock represents the 'age' of the update. It is incremented on every modification, and checked to decide if a data is fresh or not.
 This works paired with a vector of dependencies. It includes the version of every file modified by the update, and it's used to identify concurrent modification and to reconstruct the paths I told you before. If I detect two updates on the system, and neither of them compare in the other's history, I have a concurrent update and I should then show it to the user, or leverage existing conflict-solving methods (as in git) to provide an accepted version to the final user.
@@ -225,6 +242,7 @@ Each update should then be signed, to provide the basic security features whe ha
 						- Signed updates
 					</section>
 					<section
+					number = 18
 data-notes="Takling the left-side requirements, Depot successfully provides availability, freshness and consistency constraint (even if we are talking of FJC consistency, that's enough). Signing the updates provides integrity and Authenticity, while confidentiality is left to be implemented by the higher level: it's not so difficult anyway.">
 					<h3>Requirements</h3>
 					<div style="display: inline-block">
@@ -241,6 +259,7 @@ data-notes="Takling the left-side requirements, Depot successfully provides avai
 					</div>
 				</section>
 				<section data-markdown
+				number = 19
 data-notes="Performance wise, Depot has negligible cost managing small files. On bigger ones, GET cost is still small while put cost grows. This is still acceptable because storage system use is often asymmetric (many reads, few writes), and we are not talking about enormous slowdown factor as in SiRiUS.
 This cost analysis is still partially incomplete though: in order to provide confidentiality features an overhead is required by the higher levels.">
 					### Performance
@@ -250,7 +269,8 @@ This cost analysis is still partially incomplete though: in order to provide con
 						- Higher, but acceptable (56%)
 				</section>
 			</section>
-			<section data-markdown>
+			<section data-markdown
+			number = 20>
 				<textarea data-template>
 					# Q & A
 					
